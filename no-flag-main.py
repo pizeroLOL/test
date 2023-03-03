@@ -38,7 +38,7 @@ bad_web = "<!DOCTYPE html><html lang=\"zh-Hants\"><head><meta charset=\"UTF-8\">
     title+"</title><style>* {margin: 0;background-color: black;}p {text-align: center;}img {max-height: 99vh;}</style></head><body><p><img src=\"" +\
     output+"\"></p></body></html>"
 
-with open("test-c.html", "w") as file:
+with open("index.html", "w") as file:
     file.write(bad_web)
 
 
