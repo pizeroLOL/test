@@ -35,7 +35,7 @@ output = url[:end_slash]+"/images/end.jpg"
 
 
 bad_web = "<!DOCTYPE html><html lang=\"zh-Hants\"><head><meta charset=\"UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>" +\
-    title+"</title><style>* {margin: 0;background-color: black;}div {text-align: center;position: absolute;align-items:center;align-self: center;width: 100%;height: 100%;}img {max-height: 100vh;max-width: 100vw;align-self: center;}</style></head><body><div><img src=\"" +\
+    title+"</title><style>* {margin: 0;background-color: black;}div {text-align: center;position: absolute;align-items: center;align-self: center;width: 100%;height: 100%;justify-items: center;}img {height: 100%;max-width: 100vw;align-self: center;position: relative;}</style></head><body><div><img src=\"" +\
     output+"\"></div></body></html>"
 
 with open("index.html", "w") as file:
