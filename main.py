@@ -43,6 +43,9 @@ def get_title_and_end(url: str):
 
 def io_write_output(title: str, image: str):
     output_file = f"{output_dir}{title}.html"
+    if os.path.isfile(output_file):
+        return title, f"{title}.html"
+
     output = bad_web.replace("<!-- [TITLE] -->", title)
     output = output.replace("<!-- [IMAGE] -->", image)
     with open(output_file, "w") as f:
@@ -51,19 +54,24 @@ def io_write_output(title: str, image: str):
     return title, f"{title}.html"
 
 
-def gen_index(files):
+def gen_index(files, is_server=False):
+    path = f"{output_dir}index.html"
+    if os.path.isfile(path):
+        os.remove(path)
     output = []
     for title, file in files:
         ir = f"<li><a href=\"{file}\">{title}</a></li>"
         output.append(ir)
-    index = bad_web_index.replace("<!-- [FILE] -->","\n".join(output))
+    index = bad_web_index.replace("<!-- [FILE] -->", "\n".join(output))
+    if is_server is True:
+        output = index.replace(
+            "<!-- [UPDATE] -->", "<a href=\"/update\">更新数据</a>")
     # print(index)
-    with open(f"{output_dir}index.html","w") as f:
+    with open(path, "w") as f:
         f.write(index)
-    pass
 
 
-def main():
+def main(is_server=False):
     first_web = get(url).replace("\n", "").replace("  ", "")
     print("get first web OK")
 
@@ -76,15 +84,14 @@ def main():
     for title, image in titles_images:
         ir = io_write_output(title, image)
         index.append(ir)
-    gen_index(index)
+    gen_index(index, is_server)
 
 
 if __name__ == '__main__':
     if os.path.isfile(output_dir):
         print(f"检查 {output_dir} 是否为文件")
         exit(1)
-    if os.path.exists(output_dir):
-        os.rmdir(output_dir)
-    os.mkdir(output_dir)
+    if os.path.exists(output_dir) is not True:
+        # os.rmdir(output_dir)
+        os.mkdir(output_dir)
     main()
-    pass

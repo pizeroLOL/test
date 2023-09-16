@@ -1,6 +1,9 @@
-# Test
+# 快速获得青年大学习完成页
 
-[敷衍网址](https://pizerolol.github.io/test/)
+[~~敷衍网址~~](https://pizerolol.github.io/test/)
+
+> **Note**  
+> 目前无法使用，据说是因为青年大学习把 Github Action 的 ip ban 了
 
 该项目使用cc0方式开源。
 
