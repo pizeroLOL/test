@@ -2,24 +2,6 @@ import requests
 import re
 import os
 
-url = "https://news.cyol.com/gb/channels/vrGlAKDl/index.html"
-bad_web = ""
-bad_web_index = ""
-headers = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0"
-}
-
-output_dir = "public/"
-
-get_list = "<ul class=\"movie-list\">(.*?)</ul>"
-get_item = "<a href=\"(.*?)\" class=\"transition\" target=\"_blank\">(.*?)</a>"
-get_title = "<title>(.*?)</title>"
-
-with open("./template/bad_web.html", "r") as f:
-    bad_web = "".join(f.readlines())
-with open("./template/index.html", "r") as f:
-    bad_web_index = "".join(f.readlines())
-
 
 def get(url: str):
     html = requests.get(url=url, headers=headers)
@@ -71,7 +53,17 @@ def gen_index(files, is_server=False):
         f.write(index)
 
 
+def init():
+    if os.path.isfile(output_dir):
+        print(f"检查 {output_dir} 是否为文件")
+        exit(1)
+    if os.path.exists(output_dir) is not True:
+        # os.rmdir(output_dir)
+        os.mkdir(output_dir)
+
+
 def main(is_server=False):
+    init()
     first_web = get(url).replace("\n", "").replace("  ", "")
     print("get first web OK")
 
@@ -87,11 +79,24 @@ def main(is_server=False):
     gen_index(index, is_server)
 
 
+url = "https://news.cyol.com/gb/channels/vrGlAKDl/index.html"
+bad_web = ""
+bad_web_index = ""
+headers = {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0"
+}
+
+output_dir = "public/"
+
+get_list = "<ul class=\"movie-list\">(.*?)</ul>"
+get_item = "<a href=\"(.*?)\" class=\"transition\" target=\"_blank\">(.*?)</a>"
+get_title = "<title>(.*?)</title>"
+
+with open("./template/bad_web.html", "r") as f:
+    bad_web = "".join(f.readlines())
+with open("./template/index.html", "r") as f:
+    bad_web_index = "".join(f.readlines())
+
+
 if __name__ == '__main__':
-    if os.path.isfile(output_dir):
-        print(f"检查 {output_dir} 是否为文件")
-        exit(1)
-    if os.path.exists(output_dir) is not True:
-        # os.rmdir(output_dir)
-        os.mkdir(output_dir)
     main()
