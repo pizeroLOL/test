@@ -24,5 +24,5 @@ async def update():
     if (now-time).seconds < one_hour:
         return "一小时内已更新"
     time = now
-    main.main(is_server=True)
+    main(is_server=True)
     return rsp.RedirectResponse("/files/index.html")

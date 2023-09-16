@@ -45,8 +45,8 @@ def gen_index(files, is_server=False):
         ir = f"<li><a href=\"{file}\">{title}</a></li>"
         output.append(ir)
     index = bad_web_index.replace("<!-- [FILE] -->", "\n".join(output))
-    if is_server is True:
-        output = index.replace(
+    if is_server:
+        index = index.replace(
             "<!-- [UPDATE] -->", "<a href=\"/update\">更新数据</a>")
     # print(index)
     with open(path, "w") as f:
