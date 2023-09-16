@@ -2,11 +2,9 @@ from datetime import datetime
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI
 from fastapi import responses as rsp
-from typing import Union
-import main
+from main import main
 
-# update
-main.main(is_server=True)
+main(is_server=True)
 time = datetime.now()
 
 app = FastAPI()
