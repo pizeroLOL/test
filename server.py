@@ -1,13 +1,14 @@
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi import FastAPI
-from fastapi import responses as rsp
+from fastapi import FastAPI, responses as rsp
 from main import main
 
 main(is_server=True)
 time = datetime.now()
 
 app = FastAPI()
+app.add_middleware(CORSMiddleware, allow_origin=["*"])
 app.mount("/files", StaticFiles(directory="public"), name="public")
 
 
@@ -17,7 +18,7 @@ async def root():
 
 
 @app.get("/json")
-async def get_index(): 
+async def get_index():
     return rsp.RedirectResponse("/files/lock.json")
 
 
