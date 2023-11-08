@@ -8,7 +8,7 @@ main(is_server=True)
 time = datetime.now()
 
 app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origin=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["*"])
 app.mount("/files", StaticFiles(directory="public"), name="public")
 
 
