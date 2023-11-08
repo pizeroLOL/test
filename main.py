@@ -1,6 +1,7 @@
 import requests
 import re
 import os
+import json
 
 
 def get(url: str):
@@ -53,6 +54,13 @@ def gen_index(files, is_server=False):
         f.write(index)
 
 
+def gen_lock(files):
+    with open(f"{output_dir}lock.json", 'w') as file:
+        output = list({"title": title, "name": file} for title, file in files)
+        file.write(json.dumps(output, ensure_ascii=False))
+        file.close()
+
+
 def init():
     if os.path.isfile(output_dir):
         print(f"检查 {output_dir} 是否为文件")
@@ -76,12 +84,11 @@ def main(is_server=False):
     for title, image in titles_images:
         ir = io_write_output(title, image)
         index.append(ir)
+    gen_lock(index)
     gen_index(index, is_server)
 
 
 url = "https://news.cyol.com/gb/channels/vrGlAKDl/index.html"
-bad_web = ""
-bad_web_index = ""
 headers = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0"
 }
@@ -92,8 +99,11 @@ get_list = "<ul class=\"movie-list\">(.*?)</ul>"
 get_item = "<a href=\"(.*?)\" class=\"transition\" target=\"_blank\">(.*?)</a>"
 get_title = "<title>(.*?)</title>"
 
+bad_web = ""
 with open("./template/bad_web.html", "r") as f:
     bad_web = "".join(f.readlines())
+
+bad_web_index = ""
 with open("./template/index.html", "r") as f:
     bad_web_index = "".join(f.readlines())
 

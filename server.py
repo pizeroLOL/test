@@ -16,6 +16,11 @@ async def root():
     return rsp.RedirectResponse("/files/index.html")
 
 
+@app.get("/json")
+async def get_index(): 
+    return rsp.RedirectResponse("/files/lock.json")
+
+
 @app.get("/update")
 async def update():
     global time
