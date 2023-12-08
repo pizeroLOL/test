@@ -1,5 +1,8 @@
 # 快速获得青年大学习完成页
 
+> **Warning**  
+> 已归档，暂不维护
+
 [~~敷衍网址~~](https://pizerolol.github.io/test/)
 
 > **Note**  
